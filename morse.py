@@ -11,8 +11,6 @@ import subprocess
 
 import requests
 
-account_sid = "AC58d6ce6cdbb2028e3fbdb50f8533e0ca"
-auth_token = "b339db13db543da0cc2079c45efc9b7d"
 client = Client(account_sid, auth_token)
 
 fromNum = "+14405307181"
