@@ -5,24 +5,26 @@ from datetime import datetime
 
 from twilio.rest import Client
 
-import config
-
 import subprocess
 
 import requests
 
-client = Client(account_sid, auth_token)
+import traceback
+
+import config
+
+client = Client(config.account_sid, config.auth_token)
 
 fromNum = "+14405307181"
 toNum = "+12019949454"
 
-DOTLEN = 40
-DASHLEN = 500
-BETWEEN = 500
-BETWEENWORDS = 2500
+DOTLEN = 40;
+DASHLEN = 500;
+BETWEEN = 500;
+BETWEENWORDS = 2500;
 
-DELLEN = 40
-CLEARLEN = 3000
+DELLEN = 40;
+CLEARLEN = 3000;
 
 LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 
@@ -65,7 +67,7 @@ ENCODINGS = [
   "-----"
 ]
 
-morseBtnPin = 10
+morseBtnPin = 7
 sendBtnPin = 12
 delBtnPin = 15
 
@@ -203,7 +205,7 @@ def main():
                         c = m["content"][i]
                         if i % 16 == 0 and i > 0:
                             lcd.clear()
-                            lcd.write_string(m[1][i-16:i])
+                            lcd.write_string(m["content"][i-16:i])
                             lcd.cursor_pos = (1, 0)
                         lcd.write_string(c)
                         sleep(0.1)
@@ -231,8 +233,18 @@ sleep(1)
 try:
     main()
 except:
-    pass
+    lcd.clear()
+    lcd.write_string("Error")
+    lcd.cursor_pos = (1, 0)
+    lcd.write_string("Shutting Down")
+    traceback.print_exc()
+    sleep(3)
+
 lcd.clear()
+lcd.write_string("Wait 10 seconds")
+lcd.cursor_pos = (1, 0)
+lcd.write_string("Then power off")
+
 lcd.close()
 GPIO.cleanup()
 
